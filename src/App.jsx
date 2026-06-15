@@ -6,9 +6,10 @@ import { AppLayout } from './components/layout/AppLayout';
 import { LoadingScreen } from './components/shared/UI';
 import './styles/globals.css';
 
-// Pages
-const HomePage     = () => <div>Home Page</div>; // 👈 NEW HOME PAGE
+// 👉 REAL Home page import करो (IMPORTANT)
+import Home from './pages/Home';
 
+// Auth pages
 const LoginPage          = lazy(() => import('./pages/auth/Auth').then(m => ({ default: m.LoginPage })));
 const RegisterPage       = lazy(() => import('./pages/auth/Auth').then(m => ({ default: m.RegisterPage })));
 const ForgotPasswordPage = lazy(() => import('./pages/auth/Auth').then(m => ({ default: m.ForgotPasswordPage })));
@@ -33,16 +34,16 @@ export default function App() {
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
 
-            {/* ✅ PUBLIC HOME PAGE */}
-            <Route path="/" element={<HomePage />} />
+            {/* ✅ REAL HOME PAGE */}
+            <Route path="/" element={<Home />} />
 
-            {/* AUTH PAGES (NO AUTO REDIRECT FROM HOME) */}
+            {/* AUTH */}
             <Route path="/auth/login" element={<LoginPage />} />
             <Route path="/auth/register" element={<RegisterPage />} />
             <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/auth/check-email" element={<CheckEmailPage />} />
 
-            {/* PROTECTED APP */}
+            {/* PROTECTED */}
             <Route element={<Protected><AppLayout /></Protected>}>
               <Route path="/dashboard" element={<DashboardPage />} />
             </Route>
