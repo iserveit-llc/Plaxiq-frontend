@@ -28,14 +28,14 @@ const ReferralsPage  = lazy(() => import('./pages/settings/Settings').then(m => 
 function Protected({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
-  if (!user)   return <Navigate to="/auth/login" replace />;
+  if (!user) return <Navigate to="/auth/login" replace />;
   return children;
 }
 
 function Public({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingScreen />;
-  if (user)    return <Navigate to="/dashboard" replace />;
+  if (user) return <Navigate to="/dashboard" replace />;
   return children;
 }
 
@@ -43,41 +43,36 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Toaster position="top-right" toastOptions={{
-          style: {
-            background: '#131920', color: '#E2E8F0',
-            border: '1px solid rgba(255,255,255,.1)',
-            borderRadius: '10px', fontSize: '13px',
-            fontFamily: "'DM Sans', sans-serif",
-          },
-          success: { iconTheme: { primary: '#10B981', secondary: '#131920' } },
-          error:   { iconTheme: { primary: '#EF4444', secondary: '#131920' } },
-        }} />
+        <Toaster position="top-right" />
+
         <Suspense fallback={<LoadingScreen />}>
           <Routes>
-            {/* Public routes */}
-            <Route path="/auth/login"           element={<Public><LoginPage /></Public>} />
-            <Route path="/auth/register"        element={<Public><RegisterPage /></Public>} />
-            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="/auth/check-email"     element={<CheckEmailPage />} />
 
-            {/* Protected app routes */}
+            {/* Public routes */}
+            <Route path="/" element={<Navigate to="/auth/login" replace />} />
+            <Route path="/auth/login" element={<Public><LoginPage /></Public>} />
+            <Route path="/auth/register" element={<Public><RegisterPage /></Public>} />
+            <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/auth/check-email" element={<CheckEmailPage />} />
+
+            {/* Protected routes */}
             <Route element={<Protected><AppLayout /></Protected>}>
-              <Route index element={<Navigate to="/dashboard" replace />} />
-              <Route path="/dashboard"           element={<DashboardPage />} />
-              <Route path="/modules/hot-reqs"    element={<HotReqsPage />} />
-              <Route path="/modules/radar"       element={<RadarPage />} />
-              <Route path="/modules/margin"      element={<MarginPage />} />
-              <Route path="/modules/health"      element={<HealthPage />} />
-              <Route path="/modules/pulse"       element={<PulsePage />} />
-              <Route path="/contractors"         element={<ContractorsPage />} />
-              <Route path="/clients"             element={<ClientsPage />} />
-              <Route path="/settings/billing"    element={<BillingPage />} />
-              <Route path="/settings/profile"    element={<ProfilePage />} />
-              <Route path="/settings/referrals"  element={<ReferralsPage />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/modules/hot-reqs" element={<HotReqsPage />} />
+              <Route path="/modules/radar" element={<RadarPage />} />
+              <Route path="/modules/margin" element={<MarginPage />} />
+              <Route path="/modules/health" element={<HealthPage />} />
+              <Route path="/modules/pulse" element={<PulsePage />} />
+              <Route path="/contractors" element={<ContractorsPage />} />
+              <Route path="/clients" element={<ClientsPage />} />
+              <Route path="/settings/billing" element={<BillingPage />} />
+              <Route path="/settings/profile" element={<ProfilePage />} />
+              <Route path="/settings/referrals" element={<ReferralsPage />} />
             </Route>
 
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            {/* FIXED: avoid forcing dashboard redirect */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+
           </Routes>
         </Suspense>
       </BrowserRouter>
