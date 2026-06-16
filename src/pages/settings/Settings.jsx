@@ -7,18 +7,16 @@ import { billingAPI, contractorAPI, clientAPI } from '../../utils/api';
 import {
   Card,
   Btn,
-  Input,
-  Empty,
-  ErrorAlert
+  Empty
 } from '../../components/shared/UI';
 
 /* ───────────────────────── BILLING ───────────────────────── */
 
 const PLANS = [
-  { key:'starter', name:'Starter', price:'$29.99', users:'2 users', contractors:'10 contractors', features:['All 4 modules'] },
-  { key:'growth', name:'Growth', price:'$49.99', users:'5 users', contractors:'50 contractors', features:['AI features'], popular:true },
-  { key:'scale', name:'Scale', price:'$99.99', users:'15 users', contractors:'150 contractors', features:['Reports'] },
-  { key:'agency_pro', name:'Agency Pro', price:'$199.99', users:'Unlimited', contractors:'Unlimited', features:['API access'] },
+  { key:'starter', name:'Starter', price:'$29.99', users:'2 users', contractors:'10 contractors' },
+  { key:'growth', name:'Growth', price:'$49.99', users:'5 users', contractors:'50 contractors' },
+  { key:'scale', name:'Scale', price:'$99.99', users:'15 users', contractors:'150 contractors' },
+  { key:'agency_pro', name:'Agency Pro', price:'$199.99', users:'Unlimited', contractors:'Unlimited' },
 ];
 
 export function BillingPage() {
@@ -47,7 +45,7 @@ export function BillingPage() {
       <h1>Billing</h1>
 
       <Card>
-        <div>Current: {org?.tier || 'trial'}</div>
+        <div>Current plan: {org?.tier || 'trial'}</div>
         <Btn onClick={handlePortal}>Manage billing</Btn>
       </Card>
 
@@ -61,7 +59,7 @@ export function BillingPage() {
               <div>{p.price}</div>
 
               <div className="text-xs mt-2">
-                {p.features.map(f => <div key={f}>• {f}</div>)}
+                {p.users} · {p.contractors}
               </div>
 
               {!isCurrent && (
@@ -114,7 +112,7 @@ export function ProfilePage() {
 /* ───────────────────────── CONTRACTORS ───────────────────────── */
 
 export function ContractorsPage() {
-  const { data, loading, refetch } = useData(() => contractorAPI.list(), []);
+  const { data, loading } = useData(() => contractorAPI.list(), []);
 
   const contractors = data?.contractors || [];
 
@@ -178,7 +176,9 @@ export function ReferralsPage() {
       <h1>Refer & Earn</h1>
 
       <Card>
-        <div className="font-mono text-sm">{referralLink}</div>
+        <div className="font-mono text-sm">
+          {referralLink}
+        </div>
       </Card>
     </div>
   );
