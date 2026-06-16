@@ -105,7 +105,6 @@ export function ProfilePage() {
     <div className="p-4 md:p-6 max-w-2xl mx-auto">
       <h1 className="text-xl font-bold mb-6" style={{color:'var(--text)'}}>⚙ Profile & Settings</h1>
 
-      {/* Avatar */}
       <div className="flex items-center gap-4 mb-6 p-4 rounded-xl" style={{background:'var(--surface)', border:'1px solid var(--border)'}}>
         <div className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold text-white"
           style={{background:'var(--blue)'}}>
