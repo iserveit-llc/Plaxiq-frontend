@@ -1,22 +1,15 @@
-import React, { useState, useRef, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import React, { useState } from 'react';
 import { useData } from '../../hooks';
-import { reqAPI, placementAPI, orgAPI, pulseAPI } from '../../utils/api';
+import { reqAPI } from '../../utils/api';
 
 import {
   StatCard,
-  SectionHead,
-  Badge,
-  agingBadgeType,
   Empty,
-  Btn,
   Input,
-  PulseDot
 } from '../../components/shared/UI';
 
 /* ═══════════════════════════════════════════════
-   HOT REQS PAGE
+   HOT REQS PAGE (FIXED)
 ═══════════════════════════════════════════════ */
 
 export function HotReqsPage() {
@@ -77,10 +70,26 @@ export function HotReqsPage() {
 
       {/* KPIs */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
-        <StatCard label="At risk" value={`$${((summary.totalRevenueAtRisk || 0) / 1000).toFixed(1)}K`} color="var(--red)" />
-        <StatCard label="Critical" value={(summary.byAgingCategory?.critical || 0) + (summary.byAgingCategory?.overdue || 0)} color="var(--red)" />
-        <StatCard label="Aging" value={summary.byAgingCategory?.aging || 0} color="var(--amber)" />
-        <StatCard label="Avg age" value={`${Math.round(summary.avgDaysOpen || 0)}d`} color="var(--text2)" />
+        <StatCard
+          label="At risk"
+          value={`$${((summary.totalRevenueAtRisk || 0) / 1000).toFixed(1)}K`}
+          color="var(--red)"
+        />
+        <StatCard
+          label="Critical"
+          value={(summary.byAgingCategory?.critical || 0) + (summary.byAgingCategory?.overdue || 0)}
+          color="var(--red)"
+        />
+        <StatCard
+          label="Aging"
+          value={summary.byAgingCategory?.aging || 0}
+          color="var(--amber)"
+        />
+        <StatCard
+          label="Avg age"
+          value={`${Math.round(summary.avgDaysOpen || 0)}d`}
+          color="var(--text2)"
+        />
       </div>
 
       {/* HEATMAP */}
@@ -92,11 +101,11 @@ export function HotReqsPage() {
                 key={r.id}
                 className="w-14 h-14 rounded-xl flex items-center justify-center font-bold text-sm"
                 style={{
-                  background: agingBg(r.days_open),
-                  color: agingColor(r.days_open),
+                  background: agingBg(r.days_open || 0),
+                  color: agingColor(r.days_open || 0),
                 }}
               >
-                {r.days_open}d
+                {r.days_open || 0}d
               </div>
             ))}
           </div>
@@ -124,7 +133,7 @@ export function HotReqsPage() {
               <div className="text-sm font-semibold">{r.title}</div>
               <div className="text-xs">{r.client_name}</div>
               <div className="text-xs font-mono">
-                ${parseFloat(r.revenue_at_risk || 0).toLocaleString()}
+                ${(Number(r.revenue_at_risk || 0)).toLocaleString()}
               </div>
             </div>
           ))}
