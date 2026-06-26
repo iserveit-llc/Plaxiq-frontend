@@ -1,5 +1,5 @@
 {
-  "name": "plaxiq-frontend",
+  "name": "plaxiq-frontend", 
   "version": "3.0.0",
   "private": true,
   "dependencies": {
