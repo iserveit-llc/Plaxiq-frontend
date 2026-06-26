@@ -1,7 +1,7 @@
 {
   "name": "plaxiq",
   "main": "worker.js",
-  "compatibility_date": "2026-06-27",
+  "compatibility_date": "2026-06-25",
   "assets": {
     "directory": "./build",
     "binding": "ASSETS"
