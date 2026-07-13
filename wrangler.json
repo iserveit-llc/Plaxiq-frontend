@@ -1,5 +1,5 @@
 {
-  "name": "plaxiq",
+  "name": "app-plaxiq-frontend",
   "main": "worker.js",
   "compatibility_date": "2026-06-25",
   "assets": {
